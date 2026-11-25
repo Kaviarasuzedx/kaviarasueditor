@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-hidden="true"><defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#29231c"/><stop offset=".46" stop-color="#151515"/><stop offset="1" stop-color="#070807"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#FFB800" stop-opacity=".35"/><stop offset="1" stop-color="#FFB800" stop-opacity="0"/></radialGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#424344"/><stop offset=".43" stop-color="#212224"/><stop offset="1" stop-color="#0c0d0f"/></linearGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern>
+  <pattern id="grain" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="2" cy="4" r=".6" fill="#fff" opacity=".1"/><circle cx="16" cy="11" r=".6" fill="#fff" opacity=".09"/></pattern>
+ </defs><rect width="900" height="900" fill="url(#bg)"/><rect width="900" height="900" fill="url(#grid)"/><rect width="900" height="900" fill="url(#grain)"/><ellipse cx="570" cy="380" rx="420" ry="430" fill="url(#glow)"/>
+<circle cx="455" cy="432" r="320" fill="none" stroke="#ffb800" stroke-opacity=".26" stroke-width="2"/><circle cx="455" cy="432" r="240" fill="none" stroke="#ffb800" stroke-opacity=".13" stroke-dasharray="6 14"/>
+<path d="M300 660L365 328L551 312L627 660Z" fill="url(#metal)" stroke="#c29c5b" stroke-width="4"/>
+<rect x="398" y="249" width="117" height="79" rx="16" fill="#414141" stroke="#c29c5b" stroke-width="3"/>
+<rect x="365" y="465" width="212" height="123" rx="9" fill="#c48b2a"/><text x="388" y="535" font-family="Arial,sans-serif" font-weight="bold" font-size="34" letter-spacing="6" fill="#141414">BRAND</text>
+<path d="M265 690H668" stroke="#ffb800" stroke-opacity=".5" stroke-width="3"/><path d="M130 240L254 321M690 240L639 320" stroke="#ffb800" stroke-opacity=".3" stroke-width="4"/></svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-hidden="true"><defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#29231c"/><stop offset=".46" stop-color="#151515"/><stop offset="1" stop-color="#070807"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#FFB800" stop-opacity=".35"/><stop offset="1" stop-color="#FFB800" stop-opacity="0"/></radialGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#424344"/><stop offset=".43" stop-color="#212224"/><stop offset="1" stop-color="#0c0d0f"/></linearGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern>
+  <pattern id="grain" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="2" cy="4" r=".6" fill="#fff" opacity=".1"/><circle cx="16" cy="11" r=".6" fill="#fff" opacity=".09"/></pattern>
+ </defs><rect width="900" height="900" fill="url(#bg)"/><rect width="900" height="900" fill="url(#grid)"/><rect width="900" height="900" fill="url(#grain)"/><ellipse cx="530" cy="440" rx="435" ry="430" fill="url(#glow)"/>
+<circle cx="458" cy="445" r="320" fill="none" stroke="#ffb800" stroke-opacity=".23" stroke-width="2"/>
+<circle cx="458" cy="445" r="195" fill="none" stroke="#ffb800" stroke-opacity=".3" stroke-dasharray="3 14"/>
+<path d="M160 450L185 450L208 340L232 564L257 268L280 625L302 408L325 484L352 224L376 670L403 355L423 539L450 182L475 710L505 320L529 566L552 240L577 652L606 354L630 517L657 286L678 609L702 406L727 481L756 364L777 532" fill="none" stroke="#ffb800" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M160 450H777" stroke="#fff" stroke-opacity=".2" stroke-width="2"/></svg>

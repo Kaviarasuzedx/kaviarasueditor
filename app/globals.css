@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --background: 10 10 10;
+  --surface: 17 17 17;
+  --foreground: 250 250 250;
+  --secondary: 161 161 170;
+  --muted: 113 113 122;
+  --accent: 255 184 0;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; min-width: 320px; }
+  ::selection { background: rgba(255, 184, 0, 0.27); color: #fafafa; }
+  :focus-visible { outline: 2px solid #ffb800; outline-offset: 4px; }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer components {
+  .site-container { @apply mx-auto w-full max-w-site px-5 sm:px-8 xl:px-12; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.27em] text-accent sm:text-xs; }
+  .display-title { @apply font-display font-semibold tracking-[-0.055em] leading-[0.96]; }
+  .text-gradient { background: linear-gradient(115deg, #fff 15%, #a1a1aa 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .glass-panel { @apply rounded-card border border-stroke bg-surface/80; }
+  .pill { @apply inline-flex items-center rounded-pill border border-stroke px-4 py-2 text-xs font-medium tracking-wide text-secondary; }
+  .btn-primary { @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-pill bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition duration-200 hover:bg-[#ffd15a] focus-visible:outline-accent; }
+  .btn-secondary { @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-pill border border-white/20 px-6 py-3 text-sm font-semibold text-foreground transition duration-200 hover:border-accent hover:text-accent; }
+  .section-title { @apply font-display text-4xl font-semibold leading-[1.04] tracking-[-0.045em] sm:text-5xl md:text-6xl; }
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+  transform: translateY(-170%);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #ffb800;
+  color: #0a0a0a;
+  font-weight: 700;
+}
+.skip-link:focus { transform: translateY(0); }
+
+.noise-overlay { position: relative; isolation: isolate; }
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.11;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath filter='url(%23n)' opacity='.24' d='M0 0h150v150H0z'/%3E%3C/svg%3E");
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 65% 50%, rgba(255, 184, 0, 0.14) 0, rgba(255, 184, 0, 0.055) 25%, transparent 60%);
+}
+.hero-orbit {
+  width: min(40vw, 480px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 184, 0, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 90px rgba(255, 184, 0, 0.11), inset 0 0 80px rgba(255, 184, 0, 0.04);
+  transform: rotate(-18deg);
+}
+.hero-orbit::before, .hero-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 13%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 184, 0, 0.25);
+}
+.hero-orbit::after { inset: 36%; border-style: solid; background: rgba(255, 184, 0, 0.08); }
+
+.route-card {
+  @apply rounded-card border border-stroke bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-glow;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* Fine-pointer decorative cursor. Native focus indicators remain unchanged. */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-enabled,
+  .cursor-enabled a,
+  .cursor-enabled button,
+  .cursor-enabled summary,
+  .cursor-enabled [data-cursor="interactive"] {
+    cursor: none;
+  }
+}
+
+.modal-open,
+.modal-open * { cursor: auto !important; }
+.modal-open .cursor-overlay { display: none; }
+
+/* Prefer less movement for motion-sensitive users. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orbit { transform: none; }
+}
+
+/* Step 3: bespoke cinematic motion and presentation */
+@keyframes portfolio-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.animate-marquee { animation: portfolio-marquee 27s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .animate-marquee { animation: none; } }
+@media (max-width: 767px) {
+  .noise-overlay::before { opacity: 0.055; }
+}
+
+/* Step 4: quiet image/video and route-level loading states. */
+@keyframes work-skeleton-shift {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.work-skeleton {
+  background: linear-gradient(100deg, #191919 20%, #2c2a26 46%, #191919 73%);
+  background-size: 210% 100%;
+  animation: work-skeleton-shift 1.45s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-skeleton { animation: none; background: #252525; }
+}
+
+/* Step 5: accessible anchor navigation to large editorial sections. */
+[id="about-skills"],
+[id="service-list"],
+[id^="ads-commercials"],
+[id^="social-content"],
+[id^="cinematic-edits"],
+[id^="youtube"],
+[id^="sound-design"],
+[id^="motion-graphics"] {
+  scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reduce\:transform-none {
+    transform: none !important;
+  }
+}
+
+/* Step 7: keyboard anchors and reduced-flash navigation polish */
+html { scroll-padding-top: 6.5rem; }
+main:focus { outline: none; }
+:where(section[id], article[id]) { scroll-margin-top: 6.5rem; }
+@media (prefers-contrast: more) {
+  :root { --border: rgba(255,255,255,.3); --secondary: 205 205 210; }
+  .text-muted { color: rgb(195 195 202); }
+}
+@media print {
+  .cursor-enabled, .animate-marquee { cursor: auto !important; animation: none !important; }
+  header, footer { position: static !important; }
+}
