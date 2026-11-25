@@ -36,7 +36,7 @@ export function AboutIntro() {
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-7 pb-7 pt-24">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.23em] text-accent">Visual placeholder</p>
-                <p className="mt-2 text-sm text-white/80">A glimpse into Kaviarasu's creative journey.</p>
+                <p className="mt-2 text-sm text-white/80">A glimpse into Kaviarasu&apos;s creative journey.</p>
               </div>
             </div>
             <div className="flex items-center justify-between gap-3 border-t border-white/10 p-5">
