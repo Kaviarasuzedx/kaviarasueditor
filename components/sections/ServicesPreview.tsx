@@ -140,7 +140,7 @@ export function ServicesPreview() {
   }, []);
 
   return (
-    <section ref={section} className={`border-b border-stroke ${styles.section}`} id="services-preview" aria-labelledby="services-heading">
+    <section ref={section} className={styles.section} id="services-preview" aria-labelledby="services-heading">
       <div className="site-container">
         <header className={styles.header}>
           <h2 id="services-heading" className="eyebrow">002 / What I do</h2>

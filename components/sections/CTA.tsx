@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal";
 
 export function CTA() {
   return (
-    <section className="noise-overlay relative overflow-hidden py-28 sm:py-40" aria-labelledby="cta-title">
+    <section className="noise-overlay relative overflow-hidden py-14 sm:py-20" aria-labelledby="cta-title">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_54%_30%,rgba(255,184,0,0.105),transparent_46%)]" aria-hidden="true" />
       <div className="site-container relative flex flex-col items-center text-center">
         <Reveal><div aria-hidden="true" className="relative mx-auto mb-12 flex h-28 w-28 items-center justify-center rounded-[30px] border border-[#d8a32a] bg-gradient-to-br from-[#ffd260] via-[#ffb800] to-[#7e4b04] shadow-[18px_20px_0px_#543a10,0_35px_100px_rgba(255,184,0,.17)] [transform:rotate(-10deg)] sm:h-36 sm:w-36"><Play size={44} fill="#151515" strokeWidth={0} className="ml-1 text-[#151515]" /></div></Reveal>

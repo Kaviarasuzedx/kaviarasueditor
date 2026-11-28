@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 /** Opt-in desktop effect. Native cursor stays available for touch/reduced motion. */
 export function Cursor() {
+  const pathname = usePathname();
   const reducedMotion = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -13,6 +15,8 @@ export function Cursor() {
   const y = useMotionValue(-100);
   const ringX = useSpring(x, { stiffness: 360, damping: 28, mass: 0.35 });
   const ringY = useSpring(y, { stiffness: 360, damping: 28, mass: 0.35 });
+  // The contact form uses a CSS cursor so the browser handles the iframe handoff.
+  const useCustomCursor = enabled && pathname !== "/contact";
 
   useEffect(() => {
     const media = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -23,7 +27,7 @@ export function Cursor() {
   }, [reducedMotion]);
 
   useEffect(() => {
-    if (!enabled) {
+    if (!useCustomCursor) {
       setVisible(false);
       document.documentElement.classList.remove("cursor-enabled");
       return;
@@ -66,9 +70,9 @@ export function Cursor() {
       window.removeEventListener("message", frameMove);
       document.documentElement.removeEventListener("pointerleave", hide);
     };
-  }, [enabled, x, y]);
+  }, [useCustomCursor, x, y]);
 
-  if (!enabled) return null;
+  if (!useCustomCursor) return null;
 
   return (
     <div aria-hidden="true" className="cursor-overlay pointer-events-none fixed inset-0 z-[100]">

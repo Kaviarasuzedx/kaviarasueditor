@@ -1,6 +1,5 @@
 import { Reveal } from "./Reveal";
 import { StatsTimeline } from "./StatsTimeline";
-import styles from "./Stats.module.css";
 
 /** Verified experience from the brief; no invented clients, views or projects. */
 const metrics = [
@@ -13,7 +12,7 @@ const metrics = [
 export function Stats() {
   return (
     <section
-      className={`${styles.section} relative overflow-hidden border-y pb-20 pt-10 sm:pb-24 sm:pt-14`}
+      className="relative overflow-hidden py-10 sm:py-14"
       aria-labelledby="stats-title"
     >
       <div className="site-container">

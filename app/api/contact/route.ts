@@ -1,4 +1,4 @@
-import { parseContactPayload } from "@/lib/contact";
+import { CONTACT_CAPTCHA_ACTION, parseContactPayload } from "@/lib/contact";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -103,10 +103,38 @@ export async function POST(request: Request): Promise<Response> {
     return json({ ok: false, message: "The contact inbox isn't connected yet. Please use an available direct contact link." }, 503);
   }
 
+  const { captchaToken } = body as { captchaToken?: unknown };
+  if (typeof captchaToken !== "string" || !captchaToken.trim() || captchaToken.length > 2048) {
+    return json({ ok: false, message: "Please complete human verification before sending your inquiry." }, 422);
+  }
+  const configuredSecret = process.env.TURNSTILE_SECRET_KEY?.trim();
+  const developmentTestKey = !configuredSecret && process.env.NODE_ENV === "development";
+  const secret = configuredSecret || (developmentTestKey ? "1x0000000000000000000000000000000AA" : "");
+  if (!secret) {
+    return json({ ok: false, message: "Human verification is unavailable. Please use a direct contact link." }, 503);
+  }
+
   // Header is normally supplied by the hosting proxy. This limiter is best effort only.
   const clientId = request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unidentified";
   if (isRateLimited(clientId)) {
     return json({ ok: false, message: "Too many inquiries. Please try again later." }, 429, { "Retry-After": "600" });
+  }
+
+  try {
+    const verification = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: new URLSearchParams({ secret, response: captchaToken }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!verification.ok) throw new Error("Human verification provider unavailable");
+    const result = await verification.json() as { success?: boolean; action?: string; hostname?: string };
+    const hostname = new URL(request.headers.get("origin")!).hostname;
+    if (result.success !== true || (!developmentTestKey && (result.action !== CONTACT_CAPTCHA_ACTION || result.hostname !== hostname))) {
+      return json({ ok: false, message: "Human verification could not be confirmed. Please try the challenge again." }, 422);
+    }
+  } catch {
+    return json({ ok: false, message: "Human verification is temporarily unavailable. Please try again." }, 503);
   }
 
   const { name, email, projectType, budget, message } = parsed.data;

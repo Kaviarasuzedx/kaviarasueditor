@@ -4,6 +4,7 @@ import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { ArrowUpRight, CheckCircle2, Loader2, RotateCcw, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
+import { ContactCaptcha } from "./ContactCaptcha";
 import {
   BUDGET_OPTIONS, EMPTY_CONTACT, PROJECT_TYPES, validateContactFields,
   type ContactErrors, type ContactField, type ContactFields,
@@ -24,6 +25,8 @@ export function ContactForm() {
   const [touched, setTouched] = useState<Partial<Record<ContactField, boolean>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaAttempt, setCaptchaAttempt] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
 
   function update<K extends keyof ContactFields>(key: K, value: ContactFields[K]) {
@@ -67,13 +70,18 @@ export function ContactForm() {
       setStatus("error");
       return;
     }
+    if (!captchaToken) {
+      setFeedback("Please complete human verification before sending your inquiry.");
+      setStatus("error");
+      return;
+    }
     setStatus("sending");
     setFeedback("");
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, captchaToken }),
       });
       const data = (await response.json()) as ServerResponse;
       if (!response.ok || !data.ok) {
@@ -83,9 +91,12 @@ export function ContactForm() {
         }
         throw new Error(data.message || "We couldn't send your inquiry. Please try again.");
       }
+      setCaptchaToken("");
       setStatus("success");
       setFeedback(data.message || "Your inquiry was delivered.");
     } catch (error) {
+      setCaptchaToken("");
+      setCaptchaAttempt((attempt) => attempt + 1);
       setStatus("error");
       setFeedback(error instanceof Error ? error.message : "Couldn't connect to the contact service.");
     }
@@ -106,7 +117,7 @@ export function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={submit} noValidate className="relative rounded-[24px] border border-white/10 bg-[#111111] p-6 shadow-[0_20px_100px_rgba(0,0,0,.3)] sm:p-9 lg:p-11" aria-label="Project inquiry form">
+    <form ref={formRef} onSubmit={submit} noValidate className="contact-form relative rounded-[24px] border border-white/10 bg-[#111111] p-6 shadow-[0_20px_100px_rgba(0,0,0,.3)] sm:p-9 lg:p-11" aria-label="Project inquiry form">
       <div className="mb-9 flex items-start justify-between gap-5 border-b border-white/10 pb-7">
         <div>
           <p className="eyebrow">Tell me the story</p>
@@ -155,6 +166,8 @@ export function ContactForm() {
         <p id="consent-explanation" className="ml-7 mt-1 text-xs leading-5 text-muted">Details go to the configured contact inbox only. They are not publicly displayed or stored by this website.</p>
         {errors.consent && <p id="consent-error" role="alert" className="ml-7 mt-2 text-xs text-red-300">{errors.consent}</p>}
       </div>
+
+      <ContactCaptcha key={captchaAttempt} onToken={setCaptchaToken} />
 
       <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 text-xs leading-5 text-muted"><ShieldCheck size={18} className="shrink-0 text-accent" aria-hidden="true" /> Private project inquiry. No mailing lists.</div>

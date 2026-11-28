@@ -12,6 +12,8 @@ export const PROJECT_TYPES = [
   "Something else",
 ] as const;
 
+export const CONTACT_CAPTCHA_ACTION = "contact";
+
 export const BUDGET_OPTIONS = [
   "Under ₹10,000",
   "₹10,000–₹25,000",

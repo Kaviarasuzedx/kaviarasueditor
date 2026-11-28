@@ -5,7 +5,7 @@ import { Reveal } from "./Reveal";
 
 export function Showreel() {
   return (
-    <section id="showreel" className="relative py-20 sm:py-28" aria-labelledby="reel-heading">
+    <section id="showreel" className="relative py-10 sm:py-14" aria-labelledby="reel-heading">
       <div className="site-container">
         <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-8">
           <div><p className="eyebrow mb-4">001 / My Showreel</p><h2 id="reel-heading" className="section-title">Stories in motion.<br /><span className="text-secondary">Creativity in every frame.</span></h2></div>

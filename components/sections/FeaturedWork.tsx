@@ -12,7 +12,7 @@ import { featuredProjects, type Project } from "@/data/projects";
 import { getVimeoPlayerUrl, isVimeoVideo } from "@/lib/video";
 import { Reveal } from "./Reveal";
 
-function PreviewCard({ project, index, onOpen }: { project: Project; index: number; onOpen: (project: Project) => void }) {
+function PreviewCard({ project, onOpen }: { project: Project; onOpen: (project: Project) => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const anchor = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -41,8 +41,8 @@ function PreviewCard({ project, index, onOpen }: { project: Project; index: numb
 
   return (
     <article className="group relative" onPointerEnter={(e) => { if (e.pointerType === "mouse") setHover(true); }} onPointerLeave={() => setHover(false)}>
-      <div ref={anchor} className={`relative overflow-hidden rounded-card border border-stroke bg-surface ${index % 3 === 1 ? "aspect-[4/4.25]" : "aspect-[4/3.15]"}`}>
-        <Image src={project.poster} alt={`Concept artwork: ${project.title}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 680px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+      <div ref={anchor} className="relative aspect-[4/3] overflow-hidden rounded-card border border-stroke bg-surface">
+        <Image src={project.poster} alt={`Concept artwork: ${project.title}`} fill sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) calc(50vw - 42px), (max-width: 1439px) 25vw, 318px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
         {playPreview && !isVimeoVideo(project.videoSrc) && <video
           ref={videoRef}
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"}`}
@@ -58,8 +58,8 @@ function PreviewCard({ project, index, onOpen }: { project: Project; index: numb
         </button>
       </div>
       <div className="mt-5 flex items-start justify-between gap-4">
-        <div><p className="mb-1 text-[11px] uppercase tracking-[0.17em] text-muted">{project.category} / {project.year}</p><h3 className="font-display text-2xl font-semibold tracking-display sm:text-3xl">{project.title}</h3></div>
-        <button type="button" onClick={() => onOpen(project)} className="mt-1 rounded-full border border-stroke p-3 text-secondary transition hover:border-accent hover:text-accent" aria-label={`Open ${project.title} concept`}><ArrowUpRight size={18} aria-hidden="true" /></button>
+        <div><p className="mb-1 text-[11px] uppercase tracking-[0.17em] text-muted">{project.category} / {project.year}</p><h3 className="font-display text-xl font-semibold tracking-display">{project.title}</h3></div>
+        <button type="button" onClick={() => onOpen(project)} className="mt-1 shrink-0 rounded-full border border-stroke p-3 text-secondary transition hover:border-accent hover:text-accent" aria-label={`Open ${project.title} concept`}><ArrowUpRight size={18} aria-hidden="true" /></button>
       </div>
     </article>
   );
@@ -70,13 +70,24 @@ export function FeaturedWork() {
   const [videoFailed, setVideoFailed] = useState(false);
 
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="featured-heading" id="featured-work">
+    <section className="py-10 sm:py-12" aria-labelledby="featured-heading" id="featured-work">
       <div className="site-container">
-        <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-6"><div><p className="eyebrow mb-5">003 / Selected frames</p><h2 id="featured-heading" className="section-title">Crafted to <span className="text-secondary">stand out.</span></h2><p className="mt-5 max-w-xl text-sm leading-7 text-secondary">A curated selection of visual directions. The pieces below are illustrative concepts until Kaviarasu&apos;s finished client work is uploaded.</p></div><Link href="/work" className="flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-semibold transition hover:border-accent hover:text-accent">See all work <ArrowUpRight size={17} aria-hidden="true" /></Link></Reveal>
-        <div className="grid items-start gap-x-6 gap-y-12 md:grid-cols-2 lg:gap-x-8">
-          {featuredProjects.map((project, i) => <Reveal key={project.slug} delay={(i % 2) * 0.07}><PreviewCard project={project} index={i} onOpen={(p) => { setVideoFailed(false); setSelected(p); }} /></Reveal>)}
+        <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="eyebrow mb-3">003 / Selected frames</p>
+            <h2 id="featured-heading" className="section-title text-3xl sm:text-4xl md:text-5xl">Crafted to <span className="text-secondary">stand out.</span></h2>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-secondary">A curated selection of visual directions. The pieces below are illustrative concepts until Kaviarasu&apos;s finished client work is uploaded.</p>
+          </div>
+          <Link href="/work" className="flex items-center gap-2 border-b border-white/30 pb-1 text-sm font-semibold transition hover:border-accent hover:text-accent">See all work <ArrowUpRight size={17} aria-hidden="true" /></Link>
+        </Reveal>
+        <div className="grid items-start gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-6">
+          {featuredProjects.map((project, i) => (
+            <Reveal key={project.slug} className="min-w-0" delay={i * 0.07}>
+              <PreviewCard project={project} onOpen={(p) => { setVideoFailed(false); setSelected(p); }} />
+            </Reveal>
+          ))}
         </div>
-        <div className="mt-16 flex justify-center"><Link href="/work" className="group inline-flex items-center gap-5 rounded-full border border-white/25 px-7 py-4 text-sm font-semibold transition hover:border-accent hover:text-accent">Explore the full portfolio <ArrowUpRight size={18} aria-hidden="true" className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></Link></div>
+        <div className="mt-10 flex justify-center"><Link href="/work" className="group inline-flex items-center gap-5 rounded-full border border-white/25 px-7 py-4 text-sm font-semibold transition hover:border-accent hover:text-accent">Explore the full portfolio <ArrowUpRight size={18} aria-hidden="true" className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></Link></div>
       </div>
       <Modal open={Boolean(selected)} onClose={() => setSelected(null)} title={selected ? selected.title : "Project preview"}>
         {selected && <div className="space-y-5">

@@ -11,6 +11,9 @@
   --muted: 113 113 122;
   --accent: 255 184 0;
   --border: rgba(255, 255, 255, 0.08);
+  --preview-edge-fade:
+    linear-gradient(180deg, rgb(var(--background)), transparent 14%, transparent 78%, rgb(var(--background))),
+    linear-gradient(90deg, rgb(var(--background)), transparent 7%, transparent 86%, rgb(var(--background)));
   --tracking-display: 0.01em;
   --tracking-copy: 0.02em;
 }
@@ -105,6 +108,21 @@
   .cursor-enabled summary,
   .cursor-enabled [data-cursor="interactive"] {
     cursor: none;
+  }
+
+  .contact-form :is(input, select, textarea):enabled:not(:focus):not([aria-invalid="true"]):hover {
+    border-color: rgb(255 255 255 / 0.35);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html:has([data-contact-page]),
+  html:has([data-contact-page]) :is(a, button, input, label, select, summary, textarea, .cursor-pointer):not(:disabled) {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%23ffb800' fill-opacity='.08' stroke='%23ffb800'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23ffb800'/%3E%3C/svg%3E") 20 20, auto;
+  }
+
+  .contact-captcha-widget > * {
+    cursor: auto;
   }
 }
 

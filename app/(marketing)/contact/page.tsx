@@ -24,7 +24,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="noise-overlay relative isolate overflow-hidden border-b border-stroke" aria-labelledby="contact-heading">
+      <section data-contact-page className="noise-overlay relative isolate overflow-hidden border-b border-stroke" aria-labelledby="contact-heading">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_40%,rgba(255,184,0,.115),transparent_56%)]" />
         <div className="site-container relative grid min-h-[620px] items-center gap-12 pb-12 pt-20 lg:grid-cols-12 lg:gap-7 lg:pb-20 lg:pt-24">
           <div className="lg:col-span-7 lg:row-start-1">
@@ -88,7 +88,7 @@ export default function ContactPage() {
           <div className="lg:col-span-8">
             {questions.map(({ title, answer }, index) => (
               <details key={title} className="group border-b border-white/10 py-6" open={index === 0}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-foreground marker:hidden [&::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-foreground transition-colors hover:text-accent focus-visible:text-accent marker:hidden [&::-webkit-details-marker]:hidden">
                   {title}<span className="text-2xl font-light leading-none text-accent group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
                 </summary>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-secondary">{answer}</p>
