@@ -1,0 +1,40 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  height: 100%;
+  transition: border-color 420ms ease, box-shadow 420ms ease;
+}
+
+.card:hover {
+  border-color: rgb(255 184 0 / 35%);
+  box-shadow: 0 20px 48px rgb(0 0 0 / 28%);
+}
+
+.light {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 30%, rgb(255 184 0 / 12%), transparent 56%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+.card:hover .light {
+  opacity: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+
+  .light {
+    display: none;
+  }
+}

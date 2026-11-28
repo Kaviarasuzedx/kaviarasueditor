@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+const portfolioFont = ['"Clash Display"', "var(--font-inter)", "Arial", "sans-serif"];
+
 const config: Config = {
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
@@ -19,11 +21,14 @@ const config: Config = {
         stroke: "var(--border)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Arial", "sans-serif"],
-        display: ['"Clash Display"', "var(--font-inter)", "Arial", "sans-serif"],
+        sans: portfolioFont,
+        display: portfolioFont,
+      },
+      letterSpacing: {
+        display: "var(--tracking-display)",
       },
       fontSize: {
-        hero: ["clamp(3rem, 8.3vw, 7.5rem)", { lineHeight: "0.96", letterSpacing: "-0.055em" }],
+        hero: ["clamp(3rem, 8.3vw, 7.5rem)", { lineHeight: "0.96", letterSpacing: "var(--tracking-display)" }],
       },
       borderRadius: { card: "16px", pill: "999px" },
       boxShadow: { glow: "0 0 65px rgba(255, 184, 0, 0.13)" },

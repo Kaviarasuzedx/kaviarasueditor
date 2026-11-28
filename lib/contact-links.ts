@@ -1,11 +1,13 @@
 /** Public contact points. An absent value produces honest, non-clickable UI. */
 export const contactLinks = {
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() ?? "",
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "") ?? "",
+  telegram: process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim() ?? "",
   instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL?.trim() ?? "",
-  youtube: process.env.NEXT_PUBLIC_YOUTUBE_URL?.trim() ?? "",
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL?.trim() ?? "",
-  behance: process.env.NEXT_PUBLIC_BEHANCE_URL?.trim() ?? "",
+  discord: process.env.NEXT_PUBLIC_DISCORD_URL?.trim() ?? "",
+  x: process.env.NEXT_PUBLIC_X_URL?.trim() ?? "",
+  fiverr: process.env.NEXT_PUBLIC_FIVERR_URL?.trim() ?? process.env.NEXT_PUBLIC_BEHANCE_URL?.trim() ?? "",
+  github: process.env.NEXT_PUBLIC_GITHUB_URL?.trim() ?? "",
 };
 
 export function safeSocialUrl(value: string): string | null {

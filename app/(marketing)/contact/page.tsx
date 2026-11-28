@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { ArrowDownRight, CircleHelp, Clock3, Film, Sparkles } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ContactChannels } from "@/components/contact/ContactChannels";
@@ -29,9 +28,8 @@ export default function ContactPage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_80%_40%,rgba(255,184,0,.115),transparent_56%)]" />
         <div className="site-container relative grid min-h-[620px] items-center gap-12 pb-12 pt-20 lg:grid-cols-12 lg:gap-7 lg:pb-20 lg:pt-24">
           <div className="lg:col-span-7 lg:row-start-1">
-            <Reveal><Badge tone="accent" dot>Available for freelance inquiries</Badge></Reveal>
             <Reveal delay={0.08}>
-              <p className="eyebrow mt-10">05 / Say hello</p>
+              <p className="eyebrow">05 / Say hello</p>
               <h1 id="contact-heading" className="display-title mt-5 max-w-[790px] text-[clamp(3.5rem,7.5vw,7.5rem)]">
                 You have a story.<br />
                 <span className="text-gradient">Let&apos;s give it</span><br />

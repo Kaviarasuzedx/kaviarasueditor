@@ -4,18 +4,35 @@
     <linearGradient id="letter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcf4e4"/><stop offset="1" stop-color="#bcb5a8"/></linearGradient>
     <radialGradient id="glow"><stop stop-color="#ffb800" stop-opacity=".2"/><stop offset="1" stop-color="#ffb800" stop-opacity="0"/></radialGradient>
     <filter id="shadow"><feDropShadow dx="4" dy="24" stdDeviation="20" flood-color="#000" flood-opacity=".55"/></filter>
+    <style>
+      .letter { transform: translateY(-42px); animation: letter-rise 1.05s cubic-bezier(.22,.75,.25,1) .95s both; }
+      .open-flap { transform-box: view-box; transform-origin: 50% 34.375%; transform-style: preserve-3d; transform: perspective(600px) rotateX(170deg); animation: flap-open .85s cubic-bezier(.22,.75,.25,1) both; }
+      @keyframes letter-rise { from { opacity: .85; transform: translateY(21px); } to { opacity: 1; transform: translateY(-42px); } }
+      @keyframes flap-open { 0% { transform: perspective(600px) rotateX(0deg); } 82% { transform: perspective(600px) rotateX(174deg); } 100% { transform: perspective(600px) rotateX(170deg); } }
+      @media (prefers-reduced-motion: reduce) { .letter, .open-flap { animation: none; } }
+    </style>
   </defs>
   <circle cx="320" cy="320" r="260" fill="url(#glow)"/>
   <circle cx="320" cy="320" r="250" fill="none" stroke="#ffb800" stroke-opacity=".13"/>
   <circle cx="320" cy="320" r="190" fill="none" stroke="#fff" stroke-opacity=".09" stroke-dasharray="3 10"/>
   <g transform="translate(320 323) rotate(-10) translate(-320 -323)" filter="url(#shadow)">
     <rect x="124" y="218" width="392" height="241" rx="11" fill="url(#body)" stroke="#73777c" stroke-opacity=".6" stroke-width="2"/>
-    <rect x="164" y="170" width="312" height="220" rx="7" fill="url(#letter)"/>
-    <g stroke="#888679" stroke-width="3" stroke-opacity=".48"><path d="M191 233h180"/><path d="M191 256h231"/><path d="M191 279h198"/></g>
+    <path class="open-flap" d="M126 219l194 154 194-154z" fill="#484a4f" stroke="#66686c" stroke-width="1.5"/>
+    <g class="letter">
+      <rect x="164" y="218" width="312" height="220" rx="7" fill="url(#letter)"/>
+      <text x="190" y="270" fill="#29271f" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">KAVIARASU</text>
+      <text x="190" y="291" fill="#726b5d" font-family="Arial, sans-serif" font-size="9" font-weight="600" letter-spacing=".6">VIDEO EDITOR / MOTION DESIGNER</text>
+      <path d="M190 303h100" stroke="#c99b37" stroke-width="2"/>
+      <text x="190" y="323" fill="#3c392f" font-family="Arial, sans-serif" font-size="11">kaviarasu6380@gmail.com</text>
+      <text x="190" y="344" fill="#8c806b" font-family="Arial, sans-serif" font-size="9" letter-spacing=".5">PONDICHERRY, INDIA</text>
+    </g>
     <path d="M125 220l194 135-194 102z" fill="#404349"/>
     <path d="M515 220L321 355l194 102z" fill="#35383d"/>
     <path d="M125 458l194-143 196 143z" fill="#23272d"/>
-    <path d="M126 219l194 154 194-154z" fill="#484a4f" stroke="#66686c" stroke-width="1.5"/>
+    <g fill="none" stroke-linecap="round" stroke-width="2" opacity=".24">
+      <path d="M169 432l20-3m20-17 14-4m14 30 22-5m28-43 14-4m31 32 21-5m19-38 13-3m12 37 23-4m24 15 13-3" stroke="#85888a"/>
+      <path d="M184 447l11-2m70-22 9-2m131 17 12-2m43 7 9-2" stroke="#080a0d"/>
+    </g>
     <circle cx="320" cy="368" r="29" fill="#ffb800" stroke="#fcd66a" stroke-width="3"/>
     <circle cx="320" cy="368" r="17" fill="none" stroke="#2c2410" stroke-width="3"/>
     <path d="M314 367h12m-6-6v13" stroke="#2c2410" stroke-width="2"/>

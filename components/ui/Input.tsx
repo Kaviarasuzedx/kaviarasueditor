@@ -13,6 +13,7 @@ type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label: string;
   hint?: string;
   error?: string;
+  autoResize?: boolean;
 };
 
 const fieldClass = "w-full rounded-xl border border-white/15 bg-[#171717] px-4 py-3.5 text-sm text-foreground placeholder:text-muted outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-60";
@@ -48,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 });
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
-  { label, hint, error, id, className, required, rows = 5, ...props }, ref
+  { label, hint, error, id, className, required, rows = 5, autoResize = false, ...props }, ref
 ) {
   const generatedId = useId();
   const fieldId = id ?? generatedId;
@@ -64,9 +65,16 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
         ref={ref}
         required={required}
         rows={rows}
+        onInput={(event) => {
+          props.onInput?.(event);
+          if (autoResize) {
+            event.currentTarget.style.height = "auto";
+            event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+          }
+        }}
         aria-invalid={Boolean(error)}
         aria-describedby={error || hint ? descriptionId : undefined}
-        className={cn(fieldClass, "resize-y", error && "border-red-400 focus:border-red-400 focus:ring-red-400/15", className)}
+        className={cn(fieldClass, autoResize ? "resize-none overflow-hidden" : "resize-y", error && "border-red-400 focus:border-red-400 focus:ring-red-400/15", className)}
         {...props}
       />
       {(error || hint) && (

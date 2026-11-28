@@ -58,7 +58,7 @@ function PreviewCard({ project, index, onOpen }: { project: Project; index: numb
         </button>
       </div>
       <div className="mt-5 flex items-start justify-between gap-4">
-        <div><p className="mb-1 text-[11px] uppercase tracking-[0.17em] text-muted">{project.category} / {project.year}</p><h3 className="font-display text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">{project.title}</h3></div>
+        <div><p className="mb-1 text-[11px] uppercase tracking-[0.17em] text-muted">{project.category} / {project.year}</p><h3 className="font-display text-2xl font-semibold tracking-display sm:text-3xl">{project.title}</h3></div>
         <button type="button" onClick={() => onOpen(project)} className="mt-1 rounded-full border border-stroke p-3 text-secondary transition hover:border-accent hover:text-accent" aria-label={`Open ${project.title} concept`}><ArrowUpRight size={18} aria-hidden="true" /></button>
       </div>
     </article>

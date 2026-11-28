@@ -17,7 +17,7 @@ export function Showreel() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25" aria-hidden="true" />
             <div className="absolute inset-0 flex items-center justify-center"><ReelTrigger /></div>
             <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-3 sm:bottom-9 sm:left-10 sm:right-10">
-              <div><span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Video Editing / Motion Graphics / Storytelling</span><p className="font-display text-2xl font-semibold tracking-tight text-white sm:text-4xl">My Creative Showreel.</p></div>
+              <div><span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">Video Editing / Motion Graphics / Storytelling</span><p className="font-display text-2xl font-semibold tracking-display text-white sm:text-4xl">My Creative Showreel.</p></div>
               <span className="hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 sm:flex">Watch Showreel <ArrowUpRight size={16} aria-hidden="true" /></span>
             </div>
           </div>

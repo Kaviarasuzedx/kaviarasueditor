@@ -45,7 +45,7 @@ export const services: readonly ServiceDetail[] = [
     id: "social-content", number: "02", title: "Social media content", strapline: "Designed to stop the scroll.",
     description: "Fast, platform-native edits with compelling hooks, readable captions and clean pacing that keeps an idea moving from start to finish.",
     deliverables: ["Reels, Shorts and feed-ready exports", "Hook variations when scoped", "Captions, sound accents and transitions"],
-    formats: "9:16 / 1:1 / 16:9 · 1080p / 4K", turnaround: "Indicative: 2–5 working days", artwork: "/services/social.svg", artworkAlt: "Abstract vertical social video artwork", tags: ["Reels", "Shorts", "Campaigns"]
+    formats: "9:16 / 1:1 / 16:9 · 1080p / 4K", turnaround: "Indicative: 2–5 working days", artwork: "/services/social.svg", artworkAlt: "Cinematic social media reel animation", tags: ["Reels", "Shorts", "Campaigns"]
   },
   {
     id: "cinematic-edits", number: "03", title: "Cinematic edits", strapline: "A feeling that stays after the final frame.",
@@ -57,19 +57,19 @@ export const services: readonly ServiceDetail[] = [
     id: "youtube", number: "04", title: "YouTube videos", strapline: "Long-form that never loses the thread.",
     description: "Thoughtful structure, clear audio and intelligent pacing for creators who want professional storytelling without unnecessary noise.",
     deliverables: ["Long-form story edit", "B-roll, lower-thirds and sound cleanup", "Chapter or short-form cutdowns if scoped"],
-    formats: "16:9 · 1080p / 4K", turnaround: "Indicative: 4–10 working days", artwork: "/services/youtube.svg", artworkAlt: "Stylized horizontal editing and play-screen artwork", tags: ["Creator content", "Explainers"]
+    formats: "16:9 · 1080p / 4K", turnaround: "Indicative: 4–10 working days", artwork: "/services/youtube.svg", artworkAlt: "Animated premium YouTube editing player", tags: ["Creator content", "Explainers"]
   },
   {
     id: "sound-design", number: "05", title: "Sound design", strapline: "You should feel the edit, not just see it.",
     description: "Sound that supports the picture: layered transitions, sonic identity, dialogue polishing and silence used with the same care as impact.",
     deliverables: ["Dialogue cleanup where practical", "Sound effects and transition design", "Balanced final mix for web delivery"],
-    formats: "Audio for 9:16 / 16:9 · Stereo", turnaround: "Indicative: 2–6 working days", artwork: "/services/sound.svg", artworkAlt: "Abstract sound waveform and audio-channel artwork", tags: ["Mixing", "Transitions", "Impact"]
+    formats: "Audio for 9:16 / 16:9 · Stereo", turnaround: "Indicative: 2–6 working days", artwork: "/services/sound.svg", artworkAlt: "Premium animated sound design headphones and waveform", tags: ["Mixing", "Transitions", "Impact"]
   },
   {
     id: "motion-graphics", number: "06", title: "Motion graphics", strapline: "Movement with a point of view.",
     description: "Distinctive typography, titles, lower thirds and graphic systems that make information more memorable while complementing the edit.",
     deliverables: ["Animated type and title sequences", "Lower thirds and graphic callouts", "Motion elements integrated into the edit"],
-    formats: "9:16 / 16:9 · 1080p / 4K", turnaround: "Indicative: 3–8 working days", artwork: "/services/motion.svg", artworkAlt: "Abstract motion typography and geometric shapes artwork", tags: ["After Effects", "Animated type"]
+    formats: "9:16 / 16:9 · 1080p / 4K", turnaround: "Indicative: 3–8 working days", artwork: "/services/motion.svg", artworkAlt: "Animated geometric gold and glass forms", tags: ["After Effects", "Animated type"]
   },
 ];
 

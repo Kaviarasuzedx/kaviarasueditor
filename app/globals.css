@@ -11,15 +11,17 @@
   --muted: 113 113 122;
   --accent: 255 184 0;
   --border: rgba(255, 255, 255, 0.08);
+  --tracking-display: 0.01em;
+  --tracking-copy: 0.02em;
 }
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; min-width: 320px; }
+  body { margin: 0; min-width: 320px; letter-spacing: var(--tracking-copy); }
   ::selection { background: rgba(255, 184, 0, 0.27); color: #fafafa; }
   :focus-visible { outline: 2px solid #ffb800; outline-offset: 4px; }
-  h1, h2, h3, h4 { text-wrap: balance; }
+  h1, h2, h3, h4, h5, h6 { letter-spacing: var(--tracking-display); text-wrap: balance; }
   p { text-wrap: pretty; }
   a { -webkit-tap-highlight-color: transparent; }
 }
@@ -27,13 +29,13 @@
 @layer components {
   .site-container { @apply mx-auto w-full max-w-site px-5 sm:px-8 xl:px-12; }
   .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.27em] text-accent sm:text-xs; }
-  .display-title { @apply font-display font-semibold tracking-[-0.055em] leading-[0.96]; }
+  .display-title { @apply font-display font-semibold tracking-display leading-[0.96]; }
   .text-gradient { background: linear-gradient(115deg, #fff 15%, #a1a1aa 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .glass-panel { @apply rounded-card border border-stroke bg-surface/80; }
   .pill { @apply inline-flex items-center rounded-pill border border-stroke px-4 py-2 text-xs font-medium tracking-wide text-secondary; }
   .btn-primary { @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-pill bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition duration-200 hover:bg-[#ffd15a] focus-visible:outline-accent; }
   .btn-secondary { @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-pill border border-white/20 px-6 py-3 text-sm font-semibold text-foreground transition duration-200 hover:border-accent hover:text-accent; }
-  .section-title { @apply font-display text-4xl font-semibold leading-[1.04] tracking-[-0.045em] sm:text-5xl md:text-6xl; }
+  .section-title { @apply font-display text-4xl font-semibold leading-[1.04] tracking-display sm:text-5xl md:text-6xl; }
 }
 
 .skip-link {
@@ -169,4 +171,36 @@ main:focus { outline: none; }
 @media print {
   .cursor-enabled, .animate-marquee { cursor: auto !important; animation: none !important; }
   header, footer { position: static !important; }
+}
+
+/* Give adjacent sections overlapping entry and exit motion as the page scrolls. */
+@keyframes section-enter {
+  from { scale: 0.975; filter: blur(4px); opacity: 0.82; }
+  to { scale: none; filter: none; opacity: 1; }
+}
+
+@keyframes section-exit {
+  from { scale: none; filter: none; opacity: 1; }
+  to { scale: 0.975; filter: blur(4px); opacity: 0.82; }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) and (animation-range: entry 0% entry min(100%, 56vh)) {
+    .page-sections > section:where(:not([role="alert"], [aria-busy])),
+    .page-sections [data-scroll-section] {
+      animation: section-enter auto ease-out, section-exit auto ease-in;
+      animation-timeline: view(block 0px), view(block 0px);
+      animation-range: entry 0% entry min(100%, 56vh), exit max(0%, calc(100% - 56vh)) exit 100%;
+    }
+
+    .page-sections > section:first-child,
+    .page-sections > div > [data-scroll-section]:first-child {
+      animation-name: none, section-exit;
+    }
+
+    .page-sections > section:is(:target, :has(:target, :focus-visible)),
+    .page-sections [data-scroll-section]:is(:target, :has(:target, :focus-visible)) {
+      animation-name: none;
+    }
+  }
 }

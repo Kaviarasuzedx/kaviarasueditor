@@ -4,12 +4,19 @@
   <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#424344"/><stop offset=".43" stop-color="#212224"/><stop offset="1" stop-color="#0c0d0f"/></linearGradient>
   <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern>
   <pattern id="grain" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="2" cy="4" r=".6" fill="#fff" opacity=".1"/><circle cx="16" cy="11" r=".6" fill="#fff" opacity=".09"/></pattern>
- </defs><rect width="900" height="900" fill="url(#bg)"/><rect width="900" height="900" fill="url(#grid)"/><rect width="900" height="900" fill="url(#grain)"/><ellipse cx="700" cy="430" rx="450" ry="470" fill="url(#glow)"/>
-<g transform="rotate(9 465 440)"><rect x="315" y="115" width="320" height="650" rx="52" fill="#111317" stroke="#8c806b" stroke-width="8"/>
+  <style>
+   @keyframes service-product-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+   @keyframes service-glow-breathe{0%,100%{opacity:1}50%{opacity:.5}}
+   .service-product{transform-box:view-box;transform-origin:465px 440px;animation:service-product-float 4s ease-in-out infinite}
+   .service-glow{animation:service-glow-breathe 4s ease-in-out infinite}
+   @media(prefers-reduced-motion:reduce){.service-product,.service-glow{animation:none}}
+  </style>
+ </defs><rect width="900" height="900" fill="url(#bg)"/><rect width="900" height="900" fill="url(#grid)"/><rect width="900" height="900" fill="url(#grain)"/><ellipse class="service-glow" cx="700" cy="430" rx="450" ry="470" fill="url(#glow)"/>
+<g class="service-product"><g transform="rotate(9 465 440)"><rect x="315" y="115" width="320" height="650" rx="52" fill="#111317" stroke="#8c806b" stroke-width="8"/>
 <rect x="335" y="138" width="280" height="605" rx="37" fill="#30302c"/>
 <rect x="360" y="190" width="230" height="347" rx="16" fill="#75583d"/>
 <path d="M360 441L440 291L510 363L590 246V537H360Z" fill="#dd9b4b" opacity=".88"/>
 <path d="M359 486L461 374L588 445V535H359Z" fill="#292e32"/>
 <circle cx="476" cy="601" r="37" fill="#ffb800"/><path d="M467 582L467 620L491 601Z" fill="#111"/>
-<path d="M360 670H565" stroke="#8e8d89" stroke-width="10" stroke-linecap="round"/><path d="M360 697H505" stroke="#65645d" stroke-width="10" stroke-linecap="round"/></g>
+<path d="M360 670H565" stroke="#8e8d89" stroke-width="10" stroke-linecap="round"/><path d="M360 697H505" stroke="#65645d" stroke-width="10" stroke-linecap="round"/></g></g>
 <path d="M163 198L237 198M200 161V235M730 683H812M770 643V724" stroke="#ffb800" stroke-width="6" stroke-linecap="round"/></svg>

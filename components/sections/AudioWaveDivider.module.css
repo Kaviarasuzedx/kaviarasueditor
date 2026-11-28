@@ -1,0 +1,12 @@
+@media (prefers-reduced-motion: no-preference) {
+  .bar {
+    animation: pulse 2.7s ease-in-out infinite;
+    transform-origin: center;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scaleY(0.82); }
+  30% { transform: scaleY(1.2); }
+  65% { transform: scaleY(0.93); }
+}

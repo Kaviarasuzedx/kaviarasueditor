@@ -8,19 +8,24 @@ export function AboutIntro() {
   return (
     <section className="noise-overlay relative isolate overflow-hidden border-b border-stroke" aria-labelledby="about-title">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_78%_47%,rgba(255,184,0,.11),transparent_48%)]" aria-hidden="true" />
-      <div className="site-container relative grid min-h-[760px] items-center gap-14 py-20 lg:grid-cols-12 lg:gap-12 lg:py-28">
+      <div className="site-container relative grid items-center gap-x-12 gap-y-8 pb-9 pt-14 lg:grid-cols-12 lg:pb-12 lg:pt-20">
         <div className="lg:col-span-7">
           <Reveal><Badge tone="accent" dot>02 / A little about me</Badge></Reveal>
-          <Reveal delay={0.08}>
-            <h1 id="about-title" className="display-title mt-9 max-w-[830px] text-[clamp(3rem,7.4vw,7.75rem)]">
-              An editor.<br /><span className="text-gradient">A storyteller.</span><br /><span className="text-accent">A little obsessed</span><span className="text-foreground"> with detail.</span>
+          <Reveal delay={0.08} className="max-w-[830px] [container-type:inline-size]">
+            <h1 id="about-title" className="display-title mt-6 text-[length:min(clamp(3rem,7.4vw,7.75rem),14.65cqi)] leading-[1.02] sm:mt-7">
+              An editor.<br />
+              <span className="text-gradient whitespace-nowrap">A storyteller.</span>{" "}
+              <span className="mt-[0.14em] block text-[length:min(0.92em,11.5cqi)] leading-[1.04]">
+                <span className="whitespace-nowrap text-accent">A little obsessed</span><br />
+                with detail.
+              </span>
             </h1>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-9 max-w-[570px] text-base leading-8 text-secondary sm:text-lg">
+            <p className="mt-5 max-w-[570px] text-base leading-8 text-secondary sm:mt-7 sm:text-lg">
               I&apos;m Kaviarasu—a video editor and motion designer with 2+ years of experience turning ideas, footage and sound into stories that stay with people.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
               <Button href="/work" magnetic showArrow>Explore my work</Button>
               <Button href="/contact" variant="secondary" showArrow>Let&apos;s talk</Button>
             </div>

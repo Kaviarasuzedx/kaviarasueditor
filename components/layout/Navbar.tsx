@@ -67,7 +67,7 @@ export function Navbar() {
       )}
     >
       <div className="site-container flex h-[76px] items-center justify-between gap-6">
-        <Link href="/" aria-label="Kaviarasu home" className="relative z-10 shrink-0 font-display text-xl font-semibold tracking-[-0.055em] sm:text-2xl">
+        <Link href="/" aria-label="Kaviarasu home" className="relative z-10 shrink-0 font-display text-xl font-semibold tracking-display sm:text-2xl">
           KAVIARASU<span className="text-accent">.</span>
         </Link>
 

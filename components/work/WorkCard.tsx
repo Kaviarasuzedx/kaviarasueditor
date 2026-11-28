@@ -120,7 +120,7 @@ export function WorkCard({ project, onOpen }: { project: Project; onOpen: (proje
           <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[.18em] text-muted">
             {project.filters.join(" / ")} <span className="text-accent">·</span> {project.resolution} target
           </p>
-          <h3 className="font-display text-[clamp(1.4rem,2vw,2rem)] font-semibold leading-tight tracking-[-.045em]">
+          <h3 className="font-display text-[clamp(1.4rem,2vw,2rem)] font-semibold leading-tight tracking-display">
             {project.title}
           </h3>
           <p className="mt-2 max-w-md text-sm leading-6 text-secondary">{project.description}</p>

@@ -36,12 +36,34 @@ export function Cursor() {
       setVisible((old) => old || true);
       setHovered(event.target instanceof Element && Boolean(event.target.closest("a, button, summary, [data-cursor='interactive']")));
     };
+    // Pointer events inside an iframe do not bubble to the parent window. The
+    // service artwork reports its pointer position so the site cursor keeps
+    // tracking while the pointer is over those embedded animations.
+    const frameMove = (event: MessageEvent) => {
+      if (event.data?.type !== "portfolio-cursor" || event.source == null) return;
+      const frame = Array.from(document.querySelectorAll("iframe")).find((item) => item.contentWindow === event.source);
+      if (!frame) return;
+      if (event.data.action === "leave") {
+        setVisible(false);
+        return;
+      }
+      const bounds = frame.getBoundingClientRect();
+      const frameX = Number(event.data.x);
+      const frameY = Number(event.data.y);
+      if (!Number.isFinite(frameX) || !Number.isFinite(frameY)) return;
+      x.set(bounds.left + frameX * bounds.width);
+      y.set(bounds.top + frameY * bounds.height);
+      setVisible(true);
+      setHovered(Boolean(event.data.hovered));
+    };
     const hide = () => setVisible(false);
     window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("message", frameMove);
     document.documentElement.addEventListener("pointerleave", hide);
     return () => {
       document.documentElement.classList.remove("cursor-enabled");
       window.removeEventListener("pointermove", move);
+      window.removeEventListener("message", frameMove);
       document.documentElement.removeEventListener("pointerleave", hide);
     };
   }, [enabled, x, y]);

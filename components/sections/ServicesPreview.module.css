@@ -1,0 +1,190 @@
+.section {
+  padding-block: clamp(1.75rem, 3.6vw, 3.25rem);
+  background: #0b0b0b;
+}
+
+.header {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: clamp(0.5rem, 1.3vw, 1.125rem);
+}
+
+.playback, .selector { display: none; }
+
+.playback {
+  align-items: center;
+  gap: 0.35rem;
+  color: #a1a1aa;
+  font: 0.6875rem ui-monospace, monospace;
+  letter-spacing: 0.13em;
+  white-space: nowrap;
+}
+
+.playback button {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.45rem;
+  color: rgb(var(--accent));
+}
+
+.playback button:hover { background: rgb(var(--accent) / 8%); }
+
+.canvas {
+  --split-height: clamp(21.5rem, 39vw, 30rem);
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.scene {
+  position: relative;
+  min-height: var(--split-height);
+  isolation: isolate;
+  overflow: hidden;
+  border-block: 1px solid #333;
+  background: #131313;
+}
+
+.copy {
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 5%;
+  display: flex;
+  width: 55%;
+  flex-direction: column;
+  justify-content: center;
+}
+.kicker { color: rgb(var(--accent)); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+
+.copy h3 {
+  margin-block: clamp(0.65rem, 1.55vw, 1.25rem);
+  font-size: clamp(2.55rem, 6.15vw, 5.5rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: var(--tracking-display);
+}
+
+.copy h3 span { color: rgb(var(--accent)); }
+.caption { max-width: 22rem; color: #b5b5b5; font-size: clamp(0.8125rem, 1.4vw, 1.1875rem); line-height: 1.65; }
+.scene[data-scene="film"] .copy h3 { margin-block: clamp(0.55rem, 1.35vw, 1.05rem); }
+
+.art {
+  position: absolute;
+  inset: -15% -12% -10% 48%;
+  overflow: hidden;
+  background: radial-gradient(ellipse, #53452d, #201a11 50%, #111 80%);
+  transform: skewX(-12deg);
+}
+
+.art::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, #ffffff05 0 1px, transparent 1px 3px);
+  pointer-events: none;
+  content: "";
+}
+
+.object { position: absolute; top: 46%; left: 43%; translate: -50% -50%; transform: skewX(12deg) translate(var(--split-x, 0px), var(--split-y, 0px)); transition: transform 350ms ease-out; }
+
+.art[data-art="smartphone"] { background: radial-gradient(ellipse, #62506c, #2c2237 50%, #111 80%); }
+
+.phone {
+  position: relative;
+  width: clamp(6.125rem, 14vw, 11.5rem);
+  aspect-ratio: 9 / 17;
+  overflow: hidden;
+  border: 5px solid #888;
+  border-radius: 1.5rem;
+  background: #111;
+  box-shadow: 0 30px 50px #000a;
+  transform: rotate(12deg);
+}
+
+.feed { height: 300%; }
+.feed > div { position: relative; height: calc(100% / 3); background: #171717; }
+.feed img { object-fit: cover; }
+.feed > div::after { position: absolute; inset: 0; background: linear-gradient(transparent 64%, rgb(0 0 0 / 48%)); pointer-events: none; content: ""; }
+.phoneUI { position: absolute; right: 9px; bottom: 0.8rem; color: white; font-size: clamp(0.75rem, 1.5vw, 1.1875rem); line-height: 1.65; }
+
+.art:not([data-art="smartphone"]) {
+  inset: 0 0 0 42%;
+  background: #131313;
+  mask-image: linear-gradient(90deg, transparent, #000 24%);
+  transform: none;
+}
+
+.photo {
+  position: absolute;
+  inset: -1rem;
+  transform: translate(var(--split-x, 0px), var(--split-y, 0px));
+  transition: transform 350ms ease-out;
+}
+
+.photo img { object-fit: cover; object-position: 59% center; }
+.art[data-art="film"] .photo img { object-position: 65% 53%; }
+
+.selector { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.5rem, 1.6vw, 1.1rem); margin-top: 1rem; }
+.selector button {
+  display: flex;
+  min-height: 2.75rem;
+  flex-direction: column;
+  border-radius: 0.25rem;
+  color: #aaa;
+  font-size: 0.75rem;
+  text-align: left;
+}
+.selector button:is(:hover, [aria-current]) { color: #fafafa; }
+.bar { display: block; height: 2px; margin-block: 0.45rem; background: #353535; }
+.bar i { display: block; height: 100%; transform: scaleX(0); transform-origin: left; background: rgb(var(--accent)); }
+.selector [aria-current] .bar i { transform: scaleX(var(--split-progress, 0)); }
+
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 1.5rem; color: #aaa; font-size: 0.625rem; letter-spacing: 0.13em; text-transform: uppercase; }
+.footer a { display: inline-flex; align-items: center; gap: 0.25rem; color: rgb(var(--accent)); font-size: 0.8125rem; letter-spacing: var(--tracking-copy); text-transform: none; white-space: nowrap; }
+.footer a:hover { text-decoration: underline; }
+
+@keyframes reveal { from { opacity: 0; transform: translateY(30px); } }
+@keyframes slide { from { translate: 100% 0; } }
+@keyframes phone-turn { to { transform: rotate(-8deg) rotateY(22deg); } }
+@keyframes feed-scroll {
+  0%, 25%, 100% { transform: translateY(0); }
+  33%, 58% { transform: translateY(-33.333%); }
+  66%, 91% { transform: translateY(-66.666%); }
+}
+@keyframes photo-drift { to { transform: scale(1.055); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .section[data-split-ready] .playback { display: flex; }
+  .section[data-split-ready] .selector { display: grid; }
+  .section[data-split-ready] .canvas { height: var(--split-height); overflow: hidden; }
+  .section[data-split-ready] .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 800ms, visibility 800ms; }
+  .section[data-split-ready] .scene[data-split-active] { opacity: 1; visibility: visible; }
+
+  .section[data-split-seen] .scene[data-split-active] .copy { animation: reveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .section[data-split-seen] .scene[data-split-active] .art { animation: slide 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .scene[data-split-active] .phone { animation: phone-turn 5s infinite alternate; }
+  .scene[data-split-active] .feed { animation: feed-scroll 4s infinite; }
+  .scene[data-split-active] .photo img { animation: photo-drift 6s ease-out both; }
+  .section:not([data-split-running]) :is(.phone, .feed, .photo img) { animation-play-state: paused; }
+}
+
+@media (max-width: 40rem) {
+  .canvas { --split-height: clamp(23.25rem, 98vw, 25rem); }
+  .copy { inset: 6% auto auto 6%; width: 88%; }
+  .copy h3 { margin-block: 0.6rem; font-size: clamp(2.05rem, 10.4vw, 3rem); }
+  .caption { max-width: 16.25rem; }
+  .art { inset: 48% -12% -8% 10%; }
+  .art:not([data-art="smartphone"]) { inset: 43% 0 0; mask-image: linear-gradient(180deg, transparent, #000 19%); }
+  .object { top: 47%; }
+  .phone { width: clamp(5rem, 22vw, 6.5rem); }
+  .selector button { font-size: 0.6875rem; }
+  .footer { font-size: 0.5625rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .object, .photo { transition: none; }
+}

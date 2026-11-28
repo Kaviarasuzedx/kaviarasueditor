@@ -96,7 +96,7 @@ export function ContactForm() {
       <div role="status" aria-live="polite" className="flex min-h-[540px] flex-col items-start justify-center rounded-[24px] border border-emerald-400/20 bg-emerald-400/[0.055] p-8 sm:p-12">
         <CheckCircle2 size={48} className="text-emerald-300" aria-hidden="true" />
         <p className="eyebrow mt-8 text-emerald-300">Message delivered</p>
-        <h2 className="mt-4 font-display text-4xl font-semibold tracking-tight sm:text-5xl">The first frame is in.</h2>
+        <h2 className="mt-4 font-display text-4xl font-semibold tracking-display sm:text-5xl">The first frame is in.</h2>
         <p className="mt-5 max-w-md leading-7 text-secondary">{feedback} I&apos;ll review your project details and respond as availability permits.</p>
         <button type="button" onClick={() => { setValues({ ...EMPTY_CONTACT }); setErrors({}); setTouched({}); setFeedback(""); setStatus("idle"); }} className="btn-secondary mt-10 gap-2">
           <RotateCcw size={16} aria-hidden="true" /> Send another inquiry
@@ -110,7 +110,7 @@ export function ContactForm() {
       <div className="mb-9 flex items-start justify-between gap-5 border-b border-white/10 pb-7">
         <div>
           <p className="eyebrow">Tell me the story</p>
-          <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-3xl">Let&apos;s make something great.</h2>
+          <h2 className="mt-3 font-display text-2xl font-semibold tracking-display sm:text-3xl">Let&apos;s make something great.</h2>
           <p className="mt-2 text-sm leading-6 text-secondary">Fields marked <span className="text-accent">*</span> are required.</p>
         </div>
         <span className="hidden rounded-full border border-accent/20 bg-accent/5 p-3 text-accent sm:block" aria-hidden="true"><ArrowUpRight size={24} /></span>
@@ -138,7 +138,7 @@ export function ContactForm() {
       </div>
 
       <div className="mt-6">
-        <Textarea label="Tell me about your project" id="message" name="message" required rows={7} maxLength={2500} value={values.message} onChange={(event: ChangeEvent<HTMLTextAreaElement>) => update("message", event.target.value)} onBlur={() => blur("message")} error={errors.message} placeholder="What's the idea? Who's the audience? Timeline, references, deliverables…" disabled={status === "sending"} />
+        <Textarea label="Tell me about your project" id="message" name="message" required rows={7} className="resize-none overflow-y-auto" data-lenis-prevent maxLength={2500} value={values.message} onChange={(event: ChangeEvent<HTMLTextAreaElement>) => update("message", event.target.value)} onBlur={() => blur("message")} error={errors.message} placeholder="What's the idea? Who's the audience? Timeline, references, deliverables…" disabled={status === "sending"} />
         <p className="mt-2 text-right text-xs tabular-nums text-muted">{values.message.length.toLocaleString("en-IN")} / 2,500</p>
       </div>
 

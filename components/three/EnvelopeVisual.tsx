@@ -26,9 +26,14 @@ export function EnvelopeVisual() {
     const motionAllowed = window.matchMedia("(prefers-reduced-motion: no-preference)");
     let visible = false;
     const update = () => {
-      const shouldRender = visible && motionAllowed.matches && supportsWebGL();
-      setEnabled(shouldRender);
-      if (!shouldRender) setReady(false);
+      if (!motionAllowed.matches) {
+        setEnabled(false);
+        setReady(false);
+        return;
+      }
+      // Mount on first view and keep the scene alive so scrolling away and
+      // back cannot restart the envelope from a different pose.
+      if (visible && supportsWebGL()) setEnabled(true);
     };
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }, { rootMargin: "150px" });
     observer.observe(element);

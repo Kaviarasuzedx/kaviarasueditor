@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import { ServicesIntro, ServiceShowcase } from "@/components/services/ServiceShowcase";
-import { EditingProcess, QuoteTeaser, ServiceFAQ } from "@/components/services/ServiceDetails";
-import { CTA } from "@/components/sections/CTA";
+import { QuoteTeaser, ServiceFAQ } from "@/components/services/ServiceDetails";
+import { EditingProcess } from "@/components/services/EditingProcess";
 
 export const metadata: Metadata = pageMetadata(
   "/services",
@@ -18,7 +18,6 @@ export default function ServicesPage() {
       <EditingProcess />
       <QuoteTeaser />
       <ServiceFAQ />
-      <CTA />
     </>
   );
 }

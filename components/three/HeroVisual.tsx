@@ -32,8 +32,10 @@ export function HeroVisual() {
 
     const update = () => {
       if (!screen.matches || !visible) {
-        setRender3D(false);
-        setReady(false);
+        if (!screen.matches) {
+          setRender3D(false);
+          setReady(false);
+        }
         return;
       }
       if (canRenderWebGL()) setRender3D(true);

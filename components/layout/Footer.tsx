@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, MoveUpRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -10,11 +13,12 @@ const nav = [
 ] as const;
 
 export function Footer() {
+  const pathname = usePathname();
   return (
     <footer className="relative overflow-hidden border-t border-stroke bg-surface">
       <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-0 h-[340px] w-[80vw] -translate-x-1/2 rounded-full bg-accent/[0.035] blur-[100px]" />
       <div className="site-container relative py-16 sm:py-24">
-        <div className="grid gap-12 border-b border-stroke pb-16 md:grid-cols-12 md:items-end">
+        {!['/', '/contact', '/about', '/services'].includes(pathname) && <div className="grid gap-12 border-b border-stroke pb-16 md:grid-cols-12 md:items-end">
           <div className="md:col-span-8">
             <p className="eyebrow mb-6">Have a story to tell?</p>
             <h2 className="display-title max-w-3xl text-[clamp(3.2rem,7.2vw,6.7rem)]">
@@ -27,11 +31,11 @@ export function Footer() {
             </p>
             <Button href="/contact" magnetic showArrow size="lg">Start a project</Button>
           </div>
-        </div>
+        </div>}
 
         <div className="grid gap-10 py-12 md:grid-cols-12">
           <div className="md:col-span-7">
-            <Link href="/" className="inline-block font-display text-2xl font-semibold tracking-[-0.06em]">
+            <Link href="/" className="inline-block font-display text-2xl font-semibold tracking-display">
               KAVIARASU<span className="text-accent">.</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-6 text-secondary">

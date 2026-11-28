@@ -23,40 +23,58 @@ export type Milestone = {
   year: string;
   title: string;
   description: string;
+  poster: string;
 };
 
 export const editorialJourney: readonly Milestone[] = [
   {
     year: "2022",
     title: "Discover the rhythm",
+    poster: "/posters/discover-the-rhythm-career.svg",
     description:
       "My creative journey began with curiosity about video editing, exploring visuals, transitions, timing and the art of storytelling.",
   },
   {
     year: "2023",
     title: "Practice the craft",
+    poster: "/posters/practice-the-craft.svg",
     description:
       "I started learning professional editing tools, experimenting with different styles and building my creative foundation through practice.",
   },
   {
     year: "2024",
     title: "Develop my creative eye",
+    poster: "/posters/develop-my-creative-eye-v2.svg",
     description:
       "I focused on improving my editing skills, exploring cinematic storytelling, motion graphics, sound design and visual creativity.",
   },
   {
     year: "2025",
     title: "Started Freelancing",
+    poster: "/posters/started-freelancing.svg",
     description:
       "I took my editing skills into the freelance world, working on creative projects, collaborating with clients and delivering videos for different platforms.",
   },
   {
     year: "2026",
     title: "Professional Agency Collaborations",
+    poster: "/posters/professional-agency-collaborations.svg",
     description:
       "I stepped into professional creative environments, collaborating with agencies and working on brand campaigns, commercial videos and engaging digital content.",
   },
 ];
+
+export const creativeTools = [
+  { label: "Adobe Premiere Pro", caption: "Picture editing", logo: "adobe-premiere-pro.svg" },
+  { label: "Adobe After Effects", caption: "Motion & compositing", logo: "adobe-after-effects.svg" },
+  { label: "Adobe Media Encoder", caption: "Encoding & delivery", logo: "adobe-media-encoder.svg" },
+  { label: "Adobe Photoshop", caption: "Image editing", logo: "adobe-photoshop.svg" },
+  { label: "Adobe Illustrator", caption: "Vector artwork", logo: "adobe-illustrator.svg" },
+  { label: "DaVinci Resolve Studio", caption: "Color grading & finishing", logo: "davinci-resolve.png" },
+  { label: "Higgsfield AI", caption: "Generative video", logo: "higgsfield.png" },
+  { label: "Google Flow", caption: "AI filmmaking", logo: "google-flow.png" },
+  { label: "Claude", caption: "AI-assisted editing", logo: "claude.svg" },
+] as const;
 
 export const valueProps = [
   { number: "01", title: "A story-first mindset", text: "Every transition, beat and graphic should help the viewer feel or understand something." },

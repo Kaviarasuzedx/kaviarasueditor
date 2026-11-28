@@ -1,25 +1,50 @@
-/** Always-visible accessible-to-the-browser SVG fallback for mobile, low motion, and no WebGL. */
+import { useId } from "react";
+
 export function ClapperboardFallback() {
+  const id = useId();
+  const slate = `${id}-slate`;
+  const hinge = `${id}-hinge`;
+  const stripes = `${id}-stripes`;
+  const armStripes = `${id}-arm-stripes`;
+
   return (
-    <svg viewBox="0 0 520 520" role="img" aria-label="Illustrated film clapperboard" className="h-full w-full overflow-visible drop-shadow-[0_45px_75px_rgba(0,0,0,0.75)]">
+    <svg viewBox="0 0 520 520" role="img" aria-label="Illustrated film clapperboard" className="h-full w-full drop-shadow-[0_25px_30px_rgba(0,0,0,0.65)]">
       <defs>
-        <linearGradient id="slate" x1="0" x2="1" y1="0" y2="1"><stop stopColor="#3b3e45" /><stop offset="1" stopColor="#101217" /></linearGradient>
-        <linearGradient id="metal" x1="0" x2="1"><stop stopColor="#fff8e7" /><stop offset="1" stopColor="#a1a7aa" /></linearGradient>
-        <filter id="board-glow"><feGaussianBlur stdDeviation="17" /></filter>
+        <linearGradient id={slate} x2="70%" y2="100%">
+          <stop stopColor="#444448" />
+          <stop offset="1" stopColor="#222429" />
+        </linearGradient>
+        <linearGradient id={hinge} x2="100%" y2="100%">
+          <stop stopColor="#555456" />
+          <stop offset="1" stopColor="#202127" />
+        </linearGradient>
+        <pattern id={stripes} x="83" y="141" width="56" height="32" patternUnits="userSpaceOnUse">
+          <rect width="56" height="32" fill="#242426" />
+          <path d="M24 0H49L31 32H6Z" fill="#e1ded3" />
+        </pattern>
+        <pattern id={armStripes} x="83" y="104" width="56" height="32" patternUnits="userSpaceOnUse">
+          <rect width="56" height="32" fill="#242426" />
+          <path d="M6 0H31L49 32H24Z" fill="#e1ded3" />
+        </pattern>
       </defs>
-      <ellipse cx="262" cy="295" rx="176" ry="144" fill="#ffb800" opacity=".15" filter="url(#board-glow)" />
-      <g transform="rotate(-11 258 258)">
-        <rect x="90" y="150" width="350" height="255" rx="15" fill="#08090c" stroke="#71767c" strokeWidth="4" />
-        <rect x="104" y="165" width="322" height="226" rx="7" fill="url(#slate)" />
-        {[220,265,310,355].map(y => <path key={y} d={`M130 ${y} H400`} stroke="#555b64" strokeWidth="1.5" />)}
-        <rect x="125" y="182" width="4" height="184" fill="#ffb800" />
-        <rect x="84" y="116" width="363" height="53" rx="7" fill="#17191e" stroke="#777c83" strokeWidth="4" />
-        <g transform="rotate(-11 96 120)">
-          <rect x="91" y="76" width="355" height="54" rx="6" fill="url(#metal)" />
-          {[0,1,2,3,4,5].map(i => <path key={i} d={`M${104 + i*58} 76 l25 0 -33 54 -25 0 z`} fill="#242830" />)}
+      <g transform="rotate(-5 260 260)">
+        <rect x="89" y="174" width="348" height="227" rx="6" fill="#17181b" />
+        <rect x="84" y="170" width="348" height="221" rx="6" fill={`url(#${slate})`} stroke="#5d5c5b" />
+        <path d="M99 196H417V376H99ZM99 229H417M99 273H417M99 307H417M99 341H417M205 229V273M311 229V273" fill="none" stroke="#cfcac0" />
+        <g fill="#e3ded4" fontFamily="sans-serif" fontWeight="bold" fontSize="8">
+          <text x="258" y="220" textAnchor="middle" fontSize="13">KAVIARASU FILMS</text>
+          <text x="107" y="242">ROLL</text>
+          <text x="213" y="242">SCENE</text>
+          <text x="319" y="242">TAKE</text>
+          <text x="107" y="286">DIRECTOR</text>
+          <text x="107" y="320">CAMERA</text>
+          <text x="107" y="354">DATE</text>
         </g>
-        <circle cx="100" cy="138" r="11" fill="#ffb800" />
-        <path d="M368 374 H405" stroke="#ffb800" strokeWidth="4" strokeLinecap="round" />
+        <rect x="83" y="141" width="350" height="32" rx="4" fill={`url(#${stripes})`} stroke="#575654" />
+        <rect x="83" y="104" width="350" height="32" rx="4" fill={`url(#${armStripes})`} stroke="#575654" transform="rotate(-15 95 136)" />
+        <rect x="86" y="123" width="25" height="45" rx="4" fill={`url(#${hinge})`} stroke="#646365" />
+        <circle cx="98.5" cy="134" r="4.5" fill="#a8a5a0" />
+        <circle cx="98.5" cy="157" r="4.5" fill="#a8a5a0" />
       </g>
     </svg>
   );

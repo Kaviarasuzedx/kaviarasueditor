@@ -1,0 +1,288 @@
+.section {
+  --toolkit-nav: 77px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  background: #101010;
+}
+
+.sticky {
+  display: grid;
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  align-items: center;
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+}
+
+.copy h2 {
+  margin-block: clamp(0.8rem, 2.2vw, 1.75rem);
+  font-size: clamp(2.3rem, 4.4vw, 4.75rem);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: var(--tracking-display);
+}
+
+.copy h2 span { color: #92929b; }
+
+.description {
+  max-width: 28.75rem;
+  color: #a7a7ad;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+
+.hud,
+.floor,
+.ambient,
+.hint,
+.select { display: none; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+
+.controls button {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding-inline: 0.9rem;
+  border: 1px solid #333;
+  border-radius: 0.625rem;
+  background: #191919;
+  font-size: 0.875rem;
+}
+
+.controls button:is(:hover, :focus-visible) { border-color: rgb(var(--accent)); }
+.controls button:last-child svg { color: rgb(var(--accent)); }
+
+.count {
+  margin-top: 1.25rem;
+  color: rgb(var(--accent));
+  font: 0.75rem ui-monospace, monospace;
+  letter-spacing: 0.125em;
+  font-variant-numeric: tabular-nums;
+}
+
+.meter {
+  width: min(10rem, 100%);
+  height: 2px;
+  margin-top: 0.65rem;
+  background: #303030;
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  background: rgb(var(--accent));
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.mode {
+  margin-top: 0.75rem;
+  color: #a7a7ad;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+}
+
+.stage { position: relative; min-width: 0; }
+
+.world {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.625rem, 1.4vw, 1rem);
+}
+
+.item { min-width: 0; }
+
+.card {
+  position: relative;
+  height: 100%;
+  padding: 1.05rem;
+  border: 1px solid #444;
+  border-radius: 1.0625rem;
+  background: linear-gradient(145deg, #242424, #151515 60%, #121212);
+  box-shadow: 0 3px 0 #292929, 0 6px 0 #090909, 0 16px 25px #0007, inset 0 1px 0 #ffffff12;
+}
+
+.logo {
+  display: grid;
+  width: clamp(2rem, 6vw, 3rem);
+  aspect-ratio: 1;
+  margin-bottom: 0.8rem;
+  place-items: center;
+  border-radius: 0.625rem;
+  background: #171717;
+  box-shadow: 0 3px 0 #080808, 0 8px 13px #0008;
+}
+
+.logo img { width: 100%; height: 100%; object-fit: contain; }
+
+.card h3 {
+  position: relative;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: var(--tracking-display);
+  overflow-wrap: anywhere;
+}
+
+.card p {
+  position: relative;
+  margin-top: 0.35rem;
+  color: #aaa;
+  font-size: 0.75rem;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.number {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  color: #999;
+  font: 0.625rem ui-monospace, monospace;
+}
+
+.section[data-toolkit-tunnel] { animation: none; }
+
+.section[data-toolkit-tunnel] .sticky {
+  position: sticky;
+  top: var(--toolkit-nav);
+  min-height: min(calc(100svh - var(--toolkit-nav)), 36rem);
+  align-content: center;
+  overflow: clip;
+  padding-block: clamp(0.75rem, 2vw, 1.75rem);
+}
+
+.section[data-toolkit-tunnel] .spacer { height: 245svh; }
+.section[data-toolkit-tunnel] :is(.hud, .ambient, .floor, .hint) { display: block; }
+
+.section[data-toolkit-tunnel] .stage {
+  height: min(56svh, 32.5rem);
+  min-height: 16rem;
+  overflow: clip;
+  perspective: 1050px;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+.ambient,
+.floor {
+  position: absolute;
+  pointer-events: none;
+}
+
+.ambient {
+  inset: -8%;
+  background: radial-gradient(ellipse at 50% 65%, #8e650b25, transparent 55%);
+}
+
+.floor {
+  top: 45%;
+  left: -25%;
+  width: 150%;
+  height: 95%;
+  background:
+    repeating-linear-gradient(90deg, #c39a3320 0 1px, transparent 1px 70px),
+    repeating-linear-gradient(0deg, #c39a3320 0 1px, transparent 1px 70px);
+  transform: rotateX(72deg);
+  mask-image: radial-gradient(ellipse, #000 4%, transparent 66%);
+}
+
+.section[data-toolkit-tunnel] .world {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.section[data-toolkit-tunnel] .item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.section[data-toolkit-tunnel] .card {
+  padding: calc(1.2rem - var(--tunnel-grid, 0) * 0.26rem);
+  transform-style: preserve-3d;
+  opacity: var(--card-opacity, 1);
+  filter: var(--card-filter, none);
+}
+
+.section[data-toolkit-tunnel] .card::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--light-x, 50%) var(--light-y, 40%), #ffffff10, transparent 65%);
+  pointer-events: none;
+  content: "";
+}
+
+.item[data-tunnel-active] .card { border-color: #90763e; }
+
+.section[data-toolkit-tunnel] .logo { transform: translateZ(calc(25px * (1 - var(--tunnel-grid, 0)))); }
+
+.select[data-tunnel-selectable] {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  transform: translateZ(2px);
+  pointer-events: auto;
+}
+
+.stage[data-tunnel-view="tunnel"] { cursor: grab; }
+.stage[data-tunnel-dragging] .select, .stage[data-tunnel-dragging] { cursor: grabbing; }
+
+.hint {
+  position: absolute;
+  inset: auto 0 0.2rem;
+  color: #a7a7ad;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+@media (min-width: 40rem) {
+  .world { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 54rem) {
+  .sticky { grid-template-columns: minmax(15rem, 0.85fr) minmax(0, 1.5fr); }
+}
+
+@media (max-width: 53.999rem) {
+  .section[data-toolkit-tunnel] .sticky { min-height: 0; gap: 0.75rem; }
+  .section[data-toolkit-tunnel] .stage { height: clamp(14rem, 43svh, 22rem); }
+  .section[data-toolkit-tunnel] .spacer { height: 218svh; }
+  .copy h2 { margin-block: 0.55rem; font-size: clamp(1.85rem, 5.3vw, 2.5rem); }
+  .description { font-size: 0.8125rem; line-height: 1.55; }
+  .controls { margin-top: 0.75rem; }
+  .count { margin-top: 0.7rem; }
+  .section[data-toolkit-tunnel] .mode { display: none; }
+  .section[data-toolkit-tunnel] .card { padding: calc(0.77rem - var(--tunnel-grid, 0) * 0.37rem); }
+  .section[data-toolkit-tunnel] .logo { width: calc(2.4rem - var(--tunnel-grid, 0) * 0.9rem); margin-bottom: 0.45rem; }
+  .section[data-toolkit-tunnel] .card h3 { font-size: calc(0.84rem - var(--tunnel-grid, 0) * 0.15rem); }
+  .section[data-toolkit-tunnel] .card p { font-size: calc(0.69rem - var(--tunnel-grid, 0) * 0.09rem); }
+  .number { top: 0.55rem; right: 0.55rem; }
+}
+
+@media (max-width: 53.999rem) and (max-height: 41rem) {
+  .section[data-toolkit-tunnel] .stage { height: 39svh; min-height: 11.5rem; }
+  .section[data-toolkit-tunnel] .sticky { gap: 0.35rem; padding-block: 0.5rem; }
+  .section[data-toolkit-tunnel] .description { font-size: 0.75rem; }
+  .section[data-toolkit-tunnel] .card p { margin-top: 0.2rem; }
+}

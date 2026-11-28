@@ -1,76 +1,154 @@
 "use client";
 
 import { Float } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { Group, MathUtils } from "three";
+import { extend, useFrame } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
+import { Group, MathUtils, SRGBColorSpace } from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
-const dark = "#191c22";
-const graphite = "#2c2f35";
-const cream = "#f3ede1";
-const amber = "#ffb800";
+class SlateGeometry extends RoundedBoxGeometry {
+  constructor(width: number, height: number, depth: number, radius: number) {
+    super(width, height, depth, 3, radius);
+    // The printed artwork belongs only to the front (+Z) face.
+    this.groups.forEach((group, face) => {
+      group.materialIndex = face === 4 ? 1 : 0;
+    });
+  }
+}
 
-/** Procedural low-poly hero prop: no external models or textures. */
-export function Clapperboard() {
+const BeveledBox = extend(SlateGeometry);
+
+const slate = "#25272a";
+const stick = "#191a1c";
+const ink = "#dedbd1";
+const width = 3.6;
+const armRestAngle = 0.225;
+
+function paint(width: number, height: number, draw: (ctx: CanvasRenderingContext2D) => void) {
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (context) draw(context);
+  return canvas;
+}
+
+function paintSlate(ctx: CanvasRenderingContext2D) {
+  ctx.fillStyle = slate;
+  ctx.fillRect(0, 0, 1024, 624);
+  ctx.strokeStyle = ink;
+  ctx.fillStyle = ink;
+  ctx.lineWidth = 3;
+  ctx.strokeRect(44, 42, 936, 540);
+
+  for (const y of [142, 274, 374, 474]) {
+    ctx.beginPath();
+    ctx.moveTo(44, y);
+    ctx.lineTo(980, y);
+    ctx.stroke();
+  }
+  for (const x of [356, 668]) {
+    ctx.beginPath();
+    ctx.moveTo(x, 142);
+    ctx.lineTo(x, 274);
+    ctx.stroke();
+  }
+
+  ctx.textAlign = "center";
+  ctx.font = "bold 35px sans-serif";
+  ctx.fillText("KAVIARASU FILMS", 512, 111);
+  ctx.textAlign = "start";
+  ctx.font = "bold 22px sans-serif";
+  ctx.fillText("ROLL", 66, 176);
+  ctx.fillText("SCENE", 378, 176);
+  ctx.fillText("TAKE", 690, 176);
+  ctx.fillText("DIRECTOR", 66, 311);
+  ctx.fillText("CAMERA", 66, 411);
+  ctx.fillText("DATE", 66, 511);
+}
+
+function paintStick(ctx: CanvasRenderingContext2D, lean: number) {
+  ctx.fillStyle = stick;
+  ctx.fillRect(0, 0, 1024, 112);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(12, 0, 1000, 112);
+  ctx.clip();
+  ctx.fillStyle = "#e8e5db";
+  for (let x = 30; x < 1024; x += 164) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x + 85, 0);
+    ctx.lineTo(x + 85 + lean, 112);
+    ctx.lineTo(x + lean, 112);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+export function Clapperboard({ onReady }: { onReady: () => void }) {
   const outer = useRef<Group>(null);
+  const arm = useRef<Group>(null);
+  const hasRendered = useRef(false);
+  const [face, lowerStripes, upperStripes] = useMemo(() => [
+    paint(1024, 624, paintSlate),
+    paint(1024, 112, (ctx) => paintStick(ctx, -54)),
+    paint(1024, 112, (ctx) => paintStick(ctx, 54)),
+  ], []);
 
   useFrame((state, delta) => {
-    if (!outer.current) return;
-    const targetY = -0.32 + state.pointer.x * 0.16;
-    const targetX = -0.08 - state.pointer.y * 0.12;
+    if (!outer.current || !arm.current) return;
+    const targetY = -0.27 + state.pointer.x * 0.14;
+    const targetX = -0.08 - state.pointer.y * 0.10;
     outer.current.rotation.y = MathUtils.damp(outer.current.rotation.y, targetY, 2.5, delta);
     outer.current.rotation.x = MathUtils.damp(outer.current.rotation.x, targetX, 2.5, delta);
+    arm.current.rotation.z = armRestAngle + Math.sin(state.clock.elapsedTime * 1.25) * 0.045;
   });
 
   return (
-    <Float speed={1.7} rotationIntensity={0.12} floatIntensity={0.38} floatingRange={[-0.13, 0.13]}>
-      <group ref={outer} rotation={[-0.08, -0.32, -0.12]} scale={1.13}>
-        {/* Slate board body */}
-        <mesh position={[0, -0.28, 0]} castShadow receiveShadow>
-          <boxGeometry args={[3.55, 2.25, 0.22]} />
-          <meshStandardMaterial color={dark} metalness={0.65} roughness={0.28} />
+    <Float speed={1.4} rotationIntensity={0.06} floatIntensity={0.2} floatingRange={[-0.07, 0.07]}>
+      <group ref={outer} rotation={[-0.08, -0.27, -0.09]}>
+        <mesh
+          position={[0, -0.34, 0]}
+          onAfterRender={() => {
+            if (!hasRendered.current) {
+              hasRendered.current = true;
+              onReady();
+            }
+          }}
+        >
+          <BeveledBox args={[width, 2.2, 0.22, 0.035]} />
+          <meshStandardMaterial attach="material-0" color={slate} roughness={0.78} />
+          <meshStandardMaterial attach="material-1" roughness={0.78}>
+            <canvasTexture attach="map" args={[face]} colorSpace={SRGBColorSpace} anisotropy={8} />
+          </meshStandardMaterial>
         </mesh>
-        <mesh position={[0, -0.28, 0.12]}>
-          <boxGeometry args={[3.35, 2.05, 0.012]} />
-          <meshStandardMaterial color={graphite} roughness={0.5} metalness={0.4} />
+        <mesh position={[0, 0.935, 0]}>
+          <BeveledBox args={[width, 0.38, 0.29, 0.025]} />
+          <meshStandardMaterial attach="material-0" color={stick} roughness={0.55} />
+          <meshStandardMaterial attach="material-1" roughness={0.55}>
+            <canvasTexture attach="map" args={[lowerStripes]} colorSpace={SRGBColorSpace} anisotropy={8} />
+          </meshStandardMaterial>
         </mesh>
-        {/* Fine framing lines, purely geometric */}
-        {[-0.72, -0.24, 0.24, 0.72].map((y) => (
-          <mesh key={y} position={[0, y - 0.32, 0.132]}>
-            <boxGeometry args={[2.87, 0.012, 0.01]} />
-            <meshBasicMaterial color="#5a5b60" />
+        <group ref={arm} position={[-1.69, 1.17, 0]} rotation={[0, 0, armRestAngle]}>
+          <mesh position={[1.69, 0.19, 0]}>
+            <BeveledBox args={[width, 0.38, 0.29, 0.025]} />
+            <meshStandardMaterial attach="material-0" color="#292823" roughness={0.55} />
+            <meshStandardMaterial attach="material-1" roughness={0.55}>
+              <canvasTexture attach="map" args={[upperStripes]} colorSpace={SRGBColorSpace} anisotropy={8} />
+            </meshStandardMaterial>
+          </mesh>
+        </group>
+        <mesh position={[-1.63, 1.09, 0.16]}>
+          <BeveledBox args={[0.31, 0.54, 0.064, 0.027]} />
+          <meshStandardMaterial color="#343538" metalness={0.68} roughness={0.39} />
+        </mesh>
+        {[0.94, 1.22].map((y) => (
+          <mesh key={y} position={[-1.63, y, 0.2]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.063, 0.063, 0.038, 24]} />
+            <meshStandardMaterial color="#a4a29b" metalness={0.76} roughness={0.32} />
           </mesh>
         ))}
-        <mesh position={[-1.17, -0.34, 0.14]}>
-          <boxGeometry args={[0.022, 1.65, 0.009]} />
-          <meshBasicMaterial color={amber} />
-        </mesh>
-        {/* Lower hinge + clapper arm */}
-        <mesh position={[0, 0.94, 0.05]} castShadow>
-          <boxGeometry args={[3.64, 0.38, 0.29]} />
-          <meshStandardMaterial color="#20232a" metalness={0.7} roughness={0.28} />
-        </mesh>
-        <group position={[-1.62, 1.11, 0.05]} rotation={[0, 0, 0.25]}>
-          <mesh position={[1.62, 0.13, 0]} castShadow>
-            <boxGeometry args={[3.64, 0.4, 0.29]} />
-            <meshStandardMaterial color={cream} metalness={0.34} roughness={0.38} />
-          </mesh>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <mesh key={i} position={[0.21 + i * 0.56, 0.13, 0.161]} rotation={[0, 0, -0.43]}>
-              <boxGeometry args={[0.29, 0.48, 0.015]} />
-              <meshStandardMaterial color={dark} />
-            </mesh>
-          ))}
-        </group>
-        <mesh position={[-1.63, 0.99, 0.2]}>
-          <cylinderGeometry args={[0.11, 0.11, 0.39, 16]} />
-          <meshStandardMaterial color={amber} metalness={0.75} roughness={0.2} />
-        </mesh>
-        {/* Decorative bezel detail */}
-        <mesh position={[1.42, -1.07, 0.146]}>
-          <boxGeometry args={[0.5, 0.05, 0.01]} />
-          <meshBasicMaterial color={amber} />
-        </mesh>
       </group>
     </Float>
   );
